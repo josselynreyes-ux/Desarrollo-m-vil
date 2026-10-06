@@ -1,17 +1,141 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Tab 3
+      Curriculum Josselyn Reyes
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 3</ion-title>
-    </ion-toolbar>
-  </ion-header>
 
-  <app-explore-container name="Tab 3 page"></app-explore-container>
+  <ion-card
+    color="secondary"
+    style="
+      max-width: 700px;
+      margin: 30px auto;
+      border-radius: 15px;
+      overflow: hidden;
+    "
+  >
+
+    <ion-card-header style="text-align: center;">
+
+      <ion-card-title>
+        Estudio y formación
+      </ion-card-title>
+
+      <ion-card-subtitle>
+        Información sobre formación académica
+      </ion-card-subtitle>
+
+    </ion-card-header>
+
+    <ion-card-content>
+
+      <ion-list>
+        <ion-item>
+          <ion-thumbnail slot="start">
+            <img
+              src="https://1.bp.blogspot.com/-1qbY0Ic_THQ/VUm5Du1RqDI/AAAAAAAAA2s/GCBNS2wMtuY/s1600/POLITECNICA%2BNACIONAL.jpg"
+              alt="Escuela Politécnica Nacional"
+              style="
+                width: 70px;
+                height: 70px;
+                object-fit: cover;
+                border-radius: 50%;
+              "
+            />
+          </ion-thumbnail>
+
+          <ion-label style="white-space: normal;">
+            <h2>
+              <strong>Formación Académica</strong>
+            </h2>
+
+            <p>Tecnología en Desarrollo de Software</p>
+            <p>Curso de Base de Datos</p>
+            <p>Curso de Programación Orientada a Objetos</p>
+          </ion-label>
+        </ion-item>
+
+        <ion-item>
+
+          <ion-thumbnail slot="start">
+            <img
+              src="https://ecuadoruniversitario.com/wp-content/uploads/2017/05/cec-epn.jpg"
+              alt="Idiomas"
+              style="
+                width: 70px;
+                height: 70px;
+                object-fit: cover;
+                border-radius: 50%;
+              "
+            />
+          </ion-thumbnail>
+
+          <ion-label style="white-space: normal;">
+            <h2>
+              <strong>Idiomas</strong>
+            </h2>
+
+            <p>Inglés: Intermedio 1</p>
+            <p>Coreano: A1</p>
+            <p>Español: Nativo</p>
+          </ion-label>
+        </ion-item>
+
+
+        <ion-item>
+          <ion-thumbnail slot="start">
+            <img
+              src="https://static.vecteezy.com/system/resources/thumbnails/040/888/771/small_2x/ai-generated-examine-the-significance-of-debugging-tools-and-techniques-in-the-programming-workflow-and-evaluate-how-they-contribute-to-improving-code-quality-and-efficiency-free-photo.jpg"
+              alt="Habilidades técnicas"
+              style="
+                width: 70px;
+                height: 70px;
+                object-fit: cover;
+                border-radius: 50%;
+              "
+            />
+          </ion-thumbnail>
+
+          <ion-label style="white-space: normal;">
+            <h2>
+              <strong>Habilidades técnicas</strong>
+            </h2>
+
+            <p>Desarrollo Frontend</p>
+            <p>Base de Datos</p>
+            <p>Programación Orientada a Objetos</p>
+            <p>Redes y Telecomunicaciones</p>
+          </ion-label>
+        </ion-item>
+
+
+        <ion-item lines="none">
+          <ion-thumbnail slot="start">
+            <img
+              src="https://1000logos.net/wp-content/uploads/2018/11/GitHub-logo-320x185.jpg"
+              alt="Proyectos"
+              style="
+                width: 70px;
+                height: 70px;
+                object-fit: cover;
+                border-radius: 50%;
+              "
+            />
+          </ion-thumbnail>
+          <ion-label style="white-space: normal;">
+            <h2>
+              <strong>Proyectos</strong>
+            </h2>
+            <p>Roomly - Sistema de reservas bibliotecario</p>
+            <p>Sistema de licencias</p>
+            <p>Chat con IA usando Hugging Face</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
 </ion-content>

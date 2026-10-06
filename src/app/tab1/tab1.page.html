@@ -1,17 +1,91 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Tab 1
+      Curriculum Josselyn Reyes
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 1</ion-title>
-    </ion-toolbar>
-  </ion-header>
 
-  <app-explore-container name="Tab 1 page"></app-explore-container>
+  <ion-card
+    color="secondary"
+    style="
+      max-width: 700px;
+      margin: 30px auto;
+      border-radius: 15px;
+      overflow: hidden;
+    "
+  >
+
+    <img
+      src="assets/yo.jpeg"
+      alt="Foto de perfil"
+      style="
+        width: 180px;
+        height: 180px;
+        object-fit: cover;
+        display: block;
+        margin: 25px auto 10px auto;
+        border-radius: 50%;
+      "
+    />
+
+    <ion-card-header style="text-align: center;">
+
+      <ion-card-title>
+        Josselyn Mabel Reyes Parrales
+      </ion-card-title>
+
+      <ion-card-subtitle>
+        Estudiante de la Escuela Politécnica Nacional
+      </ion-card-subtitle>
+
+    </ion-card-header>
+
+    <ion-list>
+      <ion-item>
+        <ion-label>
+          Edad: 21 años
+        </ion-label>
+
+        <ion-label>
+          Nacionalidad: Ecuatoriana
+        </ion-label>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>
+          Fecha de nacimiento: 24/05/2005
+        </ion-label>
+
+        <ion-label>
+          Dirección: La Quintana
+        </ion-label>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>
+          Email: josselyn.reyes@epn.edu.ec
+        </ion-label>
+
+        <ion-label>
+          Teléfono: 0988308662
+        </ion-label>
+      </ion-item>
+    </ion-list>
+
+    <ion-card-content style="text-align: justify; line-height: 1.6; padding: 25px;">
+
+      Soy una estudiante universitaria en proceso de formación, con experiencia
+      en atención al cliente y habilidades destacadas en comunicación,
+      resolución de problemas y trabajo en equipo, responsable, organizada y
+      comprometida con mis actividades. Me adapto fácilmente a diferentes
+      entornos de trabajo, tengo disposición para aprender y adquirir nuevos
+      conocimientos. Me gusta trabajar en equipo, cumplir con mis
+      responsabilidades y brindar un trato amable y respetuoso a las demás personas.
+
+    </ion-card-content>
+  </ion-card>
+  
 </ion-content>
