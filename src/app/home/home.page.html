@@ -1,0 +1,41 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Clase02-Movil
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding"> 
+  <div class = "contador">
+    <h2><strong>Valores Actuales</strong></h2>
+    <h3><strong>By Josselyn Reyes</strong></h3>
+
+    <div style="display: flex; justify-content: center; gap: 20px;">
+      <h1><strong>{{contador1}}</strong></h1>
+      <h1><strong>{{contador2}}</strong></h1>
+      <h1><strong>{{contador3}}</strong></h1>
+      <h1><strong>{{contador4}}</strong></h1>
+      <h1><strong>{{contador5}}</strong></h1>
+    </div>
+
+<ion-button
+  color = "danger" 
+  [disabled]="contador1<=0" 
+  (click)="disminuir()"> Disminuir
+</ion-button>
+
+<ion-button 
+  (click)="aumentar()"> Aumentar
+</ion-button>
+
+<ion-button 
+  expand = "block"
+  color = "medium" 
+  [disabled]="contador1<=0" 
+  (click)="reiniciar()"> Reiniciar
+</ion-button>
+
+  </div>
+
+</ion-content>
