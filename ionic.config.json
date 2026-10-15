@@ -1,0 +1,7 @@
+{
+  "name": "compras-tabs",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
