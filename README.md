@@ -25,3 +25,8 @@ Se puede evidenciar la apk funcionando en el dispositivo movil
 
 <h2>Validaciones</h2>
 <img width="322" height="692" alt="image" src="https://github.com/user-attachments/assets/45ee9012-bd54-45b5-8884-ecc1041fb358" />
+
+<h2>APK</h2>
+[app-debug.zip](https://github.com/user-attachments/files/33477555/app-debug.zip)
+
+
