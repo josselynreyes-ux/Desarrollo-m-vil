@@ -2,13 +2,13 @@
 
 ## 1. Descripción
 
-Para la realización del presente deber, se realizaron modificaciones en el archivo `photo.service.ts` de la aplicación desarrollada con Ionic y Capacitor. El objetivo fue configurar la captura de fotografías y permitir que las imágenes tomadas desde la aplicación se guarden en la galería del dispositivo Android.
+Para la realización del presente deber, se realizaron modificaciones en la aplicación desarrollada con Ionic y Capacitor con el objetivo de capturar fotografías desde la aplicación y guardarlas en la galería del dispositivo Android.
 
 ## 2. Modificaciones realizadas
 
-### 2.1. Configuración de la cámara
+### 2.1. Configuración de la cámara y almacenamiento de fotografías
 
-En el método `addNewToGallery()` del archivo `photo.service.ts` se agregaron las siguientes propiedades para configurar la captura y el almacenamiento de las fotografías.
+En el archivo `photo.service.ts`, dentro del método `addNewToGallery()`, se agregaron las siguientes propiedades para configurar la captura y el almacenamiento de las fotografías.
 
 ```typescript
 public async addNewToGallery() {
@@ -41,7 +41,25 @@ Las propiedades agregadas cumplen las siguientes funciones:
 - **`filepath`**: almacena la ruta del archivo de la fotografía.
 - **`webviewPath`**: contiene la dirección utilizada para mostrar la fotografía dentro de la aplicación.
 
-### 2.2. Permisos de Android
+### 2.2. Llamada al método para guardar fotografías
+
+Se agregó el método `addPhotoToGallery()` en el componente de la aplicación para llamar a la función encargada de capturar y guardar las fotografías.
+
+```typescript
+async addPhotoToGallery() {
+  await this.photoService.addNewToGallery();
+}
+```
+
+Este método cumple las siguientes funciones:
+
+- **`async`**: permite trabajar con operaciones asíncronas.
+- **`await`**: espera a que finalice la operación antes de continuar.
+- **`this.photoService.addNewToGallery()`**: llama al método del servicio `photoService`, encargado de abrir la cámara, capturar la fotografía y solicitar que se guarde en la galería.
+
+De esta manera, el componente utiliza el servicio de fotografías sin tener que repetir toda la lógica de captura y almacenamiento.
+
+### 2.3. Permisos de Android
 
 Se agregaron los siguientes permisos en el archivo `AndroidManifest.xml`:
 
@@ -81,7 +99,7 @@ En esta evidencia se verifica que la fotografía también se encuentra guardada 
 
 Se muestran las propiedades y características del archivo de imagen obtenido mediante la aplicación.
 
-<img width="332" alt="Características de la fotografía de la aplicación" src="https://github.com/user-attachments/assets/79c30a25-3c4e-4999-878d-8413c436bde8" />
+<img width="332" alt="Características de la fotografía tomada desde la aplicación" src="https://github.com/user-attachments/assets/79c30a25-3c4e-4999-878d-8413c436bde8" />
 
 ### 3.5. Características de una fotografía tomada con la cámara del celular
 
@@ -91,7 +109,7 @@ Como referencia, se presentan las características de una fotografía tomada dir
 
 ## 4. Conclusión
 
-Se realizaron modificaciones en el servicio de fotografías de la aplicación para configurar la captura de imágenes y solicitar su almacenamiento en la galería del dispositivo Android. Además, se presentaron evidencias del funcionamiento de la aplicación y de las características de las fotografías obtenidas.
+Se realizaron modificaciones en el servicio de fotografías y en el componente de la aplicación para configurar la captura de imágenes y solicitar su almacenamiento en la galería del dispositivo Android.
 
 
  ____ 
