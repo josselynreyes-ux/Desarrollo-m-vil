@@ -11,13 +11,12 @@
     </ion-toolbar>
   </ion-header>
 
-  <!-- CHANGE: Add a grid component to display the photos. -->
   <ion-grid>
     <ion-row>
-      <!-- CHANGE: Create a new column and image element for each photo -->
       @for (photo of photoService.photos(); track photo.filepath; let position = $index) {
       <ion-col size="6">
-        <img [src]="photo.webviewPath" [attr.alt]="'Photo ' + (position + 1)" loading="lazy" />
+        <!-- evento click para llamar a showActionSheet y enviar la posición -->
+        <img [src]="photo.webviewPath" [attr.alt]="'Photo ' + (position + 1)" loading="lazy" (click)="showActionSheet(photo, position)" />
       </ion-col>
       }
     </ion-row>
