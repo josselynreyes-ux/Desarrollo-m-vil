@@ -188,3 +188,7 @@ En la siguiente evidencia se muestra el funcionamiento de la opción para elimin
 Se implementaron funcionalidades para capturar fotografías, solicitar su almacenamiento en la galería del dispositivo Android y administrar las imágenes mostradas en la aplicación.
 
 Además, se incorporó un menú de acciones que permite seleccionar la opción de eliminar o cancelar, junto con un método en el servicio para actualizar la lista de fotografías. Finalmente, se presentaron evidencias del funcionamiento de la captura, el almacenamiento y la eliminación de imágenes desde la interfaz de la aplicación.
+
+##APK
+[Camara.zip](https://github.com/user-attachments/files/33703915/Camara.zip)
+
