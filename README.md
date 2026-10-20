@@ -1,8 +1,8 @@
-# Tarea 03: Captura y almacenamiento de fotografías en Android
+# Tarea 03: Captura, almacenamiento y eliminación de fotografías en Android
 
 ## 1. Descripción
 
-Para la realización del presente deber, se realizaron modificaciones en la aplicación desarrollada con Ionic y Capacitor con el objetivo de capturar fotografías desde la aplicación y guardarlas en la galería del dispositivo Android.
+Para la realización del presente deber, se realizaron modificaciones en la aplicación desarrollada con Ionic y Capacitor con el objetivo de capturar fotografías desde la aplicación, guardarlas en la galería del dispositivo Android y permitir su eliminación desde la interfaz de usuario.
 
 ## 2. Modificaciones realizadas
 
@@ -51,17 +51,11 @@ async addPhotoToGallery() {
 }
 ```
 
-Este método cumple las siguientes funciones:
-
-- **`async`**: permite trabajar con operaciones asíncronas.
-- **`await`**: espera a que finalice la operación antes de continuar.
-- **`this.photoService.addNewToGallery()`**: llama al método del servicio `photoService`, encargado de abrir la cámara, capturar la fotografía y solicitar que se guarde en la galería.
-
-De esta manera, el componente utiliza el servicio de fotografías sin tener que repetir toda la lógica de captura y almacenamiento.
+Este método permite llamar al servicio `photoService`, que se encarga de abrir la cámara, capturar la fotografía y solicitar que se guarde en la galería del dispositivo.
 
 ### 2.3. Permisos de Android
 
-Se agregaron los siguientes permisos en el archivo `AndroidManifest.xml`:
+En el archivo `AndroidManifest.xml` se agregaron los siguientes permisos:
 
 ```xml
 <uses-permission
@@ -71,9 +65,85 @@ Se agregaron los siguientes permisos en el archivo `AndroidManifest.xml`:
 <uses-permission
     android:name="android.permission.WRITE_EXTERNAL_STORAGE"
     android:maxSdkVersion="29" />
+
+<uses-permission
+    android:name="android.permission.READ_MEDIA_IMAGES" />
 ```
 
-Estos permisos permiten el acceso de lectura y escritura al almacenamiento externo en las versiones de Android indicadas. En versiones más recientes, el acceso a los archivos se gestiona de manera diferente.
+Estos permisos corresponden a diferentes versiones de Android:
+
+- **`READ_EXTERNAL_STORAGE`**: permite leer archivos del almacenamiento externo en las versiones de Android indicadas por `maxSdkVersion`.
+- **`WRITE_EXTERNAL_STORAGE`**: permite escribir en el almacenamiento externo en las versiones de Android indicadas por `maxSdkVersion`.
+- **`READ_MEDIA_IMAGES`**: permite solicitar acceso de lectura a imágenes en Android 13 y versiones posteriores compatibles.
+
+El acceso efectivo depende de la versión de Android, los permisos concedidos y la forma en que la aplicación administra las imágenes.
+
+### 2.4. Implementación de la opción para eliminar fotografías
+
+Para incorporar la opción de eliminar fotografías, se agregó el método `showActionSheet()` en el componente de la aplicación. Este método muestra un menú con las opciones **Eliminar** y **Cancelar** cuando el usuario desea realizar una acción sobre una fotografía.
+
+```typescript
+public async showActionSheet(
+  photo: UserPhoto,
+  position: number
+) {
+  const actionSheet = await this.actionSheetController.create({
+    header: 'Fotos',
+    buttons: [
+      {
+        text: 'Eliminar',
+        role: 'destructive',
+        icon: 'trash',
+        handler: () => {
+          this.photoService.deletePhoto(position);
+        }
+      },
+      {
+        text: 'Cancelar',
+        icon: 'close',
+        role: 'cancel',
+        handler: () => {
+          // No hace nada, solo cierra el menu
+        }
+      }
+    ]
+  });
+
+  await actionSheet.present();
+}
+```
+
+Las principales funciones de este método son:
+
+- **`actionSheetController.create()`**: crea un menú de acciones.
+- **`header: 'Fotos'`**: establece el título del menú.
+- **`text: 'Eliminar'`**: presenta la opción para eliminar la fotografía seleccionada.
+- **`role: 'destructive'`**: identifica la acción como destructiva.
+- **`icon: 'trash'`**: muestra un icono de papelera.
+- **`this.photoService.deletePhoto(position)`**: llama al servicio encargado de eliminar la fotografía de la lista.
+- **`text: 'Cancelar'`**: permite cerrar el menú sin ejecutar la eliminación.
+- **`actionSheet.present()`**: muestra el menú en pantalla.
+
+### 2.5. Método para eliminar fotografías del servicio
+
+En el archivo `photo.service.ts` se agregó el método `deletePhoto()`, encargado de actualizar la lista de fotografías y excluir la imagen seleccionada.
+
+```typescript
+public async deletePhoto(position: number) {
+  this.photos.update((photos) =>
+    photos.filter((_, index) => index !== position)
+  );
+}
+```
+
+Este método funciona de la siguiente manera:
+
+- **`position`**: recibe la posición de la fotografía que se desea eliminar.
+- **`this.photos.update()`**: actualiza la lista de fotografías almacenada en el servicio.
+- **`photos.filter()`**: crea una nueva lista que contiene únicamente las fotografías que cumplen la condición indicada.
+- **`index !== position`**: conserva todas las fotografías excepto la que se encuentra en la posición seleccionada.
+
+De esta manera, la fotografía desaparece de la lista que se muestra en la aplicación sin necesidad de modificar manualmente los demás elementos.
 
 ## 3. Evidencias de funcionamiento
 
@@ -91,7 +161,7 @@ Se presenta la fotografía capturada utilizando la cámara desde la aplicación 
 
 ### 3.3. Fotografía guardada en la galería del celular
 
-En esta evidencia se verifica que la fotografía también se encuentra guardada en la galería del dispositivo Android.
+En esta evidencia se muestra la fotografía guardada en la galería del dispositivo Android.
 
 <img width="312" alt="Fotografía guardada en la galería" src="https://github.com/user-attachments/assets/419ceac8-3361-4370-8b08-2bc8b542627a" />
 
@@ -103,14 +173,18 @@ Se muestran las propiedades y características del archivo de imagen obtenido me
 
 ### 3.5. Características de una fotografía tomada con la cámara del celular
 
-Como referencia, se presentan las características de una fotografía tomada directamente con la cámara del dispositivo, para comparar sus propiedades con las de la imagen obtenida mediante la aplicación.
+Como referencia, se presentan las características de una fotografía tomada directamente con la cámara del dispositivo para comparar sus propiedades con las de la imagen obtenida mediante la aplicación.
 
 <img width="347" alt="Características de una fotografía tomada con la cámara del celular" src="https://github.com/user-attachments/assets/d8cf42ae-2ed8-4d78-a6fd-c3d665ee9700" />
 
+### 3.6. Funcionamiento de la opción para eliminar fotografías
+
+En la siguiente evidencia se muestra el funcionamiento de la opción para eliminar una fotografía desde el menú de acciones de la aplicación.
+
+<img width="330" alt="Evidencia de la opción para eliminar fotografías" src="https://github.com/user-attachments/assets/61db119c-9dd4-40b6-a070-1e3a05eedc84" />
+
 ## 4. Conclusión
 
-Se realizaron modificaciones en el servicio de fotografías y en el componente de la aplicación para configurar la captura de imágenes y solicitar su almacenamiento en la galería del dispositivo Android.
+Se implementaron funcionalidades para capturar fotografías, solicitar su almacenamiento en la galería del dispositivo Android y administrar las imágenes mostradas en la aplicación.
 
-
- ____ 
-APK: [camara.zip](https://github.com/user-attachments/files/33645305/camara.zip)
+Además, se incorporó un menú de acciones que permite seleccionar la opción de eliminar o cancelar, junto con un método en el servicio para actualizar la lista de fotografías. Finalmente, se presentaron evidencias del funcionamiento de la captura, el almacenamiento y la eliminación de imágenes desde la interfaz de la aplicación.
