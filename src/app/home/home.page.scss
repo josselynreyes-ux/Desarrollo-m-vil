@@ -1,27 +1,144 @@
-#container {
-  text-align: center;
-
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
+// Define el fondo de la página.
+ion-content {
+  --background: #f5f3fa;
 }
 
-#container strong {
-  font-size: 20px;
-  line-height: 26px;
+// Aplica el color principal a las barras.
+ion-toolbar {
+  --background: #5b3b8c;
+  --color: #ffffff;
 }
 
-#container p {
-  font-size: 16px;
-  line-height: 22px;
+// Distribuye las tarjetas según el espacio disponible.
+.character-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+  padding: 12px;
+  align-items: stretch;
+}
 
-  color: #8c8c8c;
-
+// Uniforma la apariencia de las tarjetas.
+ion-card {
   margin: 0;
+  border-radius: 14px;
+  background: #ffffff;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  min-width: 0;
 }
 
-#container a {
-  text-decoration: none;
+// Reserva el mismo espacio para todas las imágenes.
+.image-container {
+  width: 100%;
+  height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #efedf5;
+  overflow: hidden;
+}
+
+// Muestra la imagen completa sin deformarla.
+.character-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+
+// Muestra un mensaje cuando una imagen no está disponible.
+.image-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  color: #777777;
+  font-size: 14px;
+  text-align: center;
+}
+
+// Ajusta el espacio interno de los encabezados.
+ion-card-header {
+  padding: 12px 12px 6px;
+}
+
+// Resalta los nombres de los personajes.
+ion-card-title {
+  color: #5b3b8c;
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+// Permite identificar los nombres que abren el detalle.
+.clickable-title {
+  cursor: pointer;
+}
+
+// Ajusta el contenido de las tarjetas.
+ion-card-content {
+  padding: 8px 12px 14px;
+  color: #444444;
+}
+
+// Mantiene una separación uniforme entre párrafos.
+ion-card-content p {
+  margin-top: 0;
+  margin-bottom: 8px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+// Evita que textos largos desborden las tarjetas.
+.description {
+  overflow-wrap: anywhere;
+}
+
+// Centra los mensajes de carga y error.
+.estado {
+  padding: 20px;
+  text-align: center;
+}
+
+// Resalta los títulos de los mensajes.
+.estado h2 {
+  color: #5b3b8c;
+  font-size: 18px;
+}
+
+// Mantiene legibles los mensajes.
+.estado p {
+  color: #555555;
+  line-height: 1.5;
+}
+
+// Separa los botones de los mensajes.
+.estado ion-button {
+  margin-top: 12px;
+}
+
+// Adapta las tarjetas a las pantallas más estrechas.
+@media (max-width: 360px) {
+  .character-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    padding: 8px;
+  }
+
+  // Reduce la altura de las imágenes en móviles pequeños.
+  .image-container {
+    height: 180px;
+  }
+
+  // Ajusta el tamaño del título.
+  ion-card-title {
+    font-size: 15px;
+  }
+
+  // Reduce el espacio interno de las tarjetas.
+  ion-card-content {
+    padding: 8px;
+  }
 }

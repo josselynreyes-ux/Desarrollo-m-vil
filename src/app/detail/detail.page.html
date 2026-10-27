@@ -1,0 +1,58 @@
+@if (loading) {
+  <div class="estado">
+    <p>Cargando información...</p>
+  </div>
+}
+
+@if (!loading && errorMessage) {
+  <div class="estado">
+    <ion-text color="danger">
+      <p>{{ errorMessage }}</p>
+    </ion-text>
+
+    <ion-button (click)="loadCharacter()">
+      Reintentar
+    </ion-button>
+  </div>
+}
+
+@if (!loading && character) {
+  <ion-card>
+    @if (character.imageUrl) {
+      <img
+        class="detail-image"
+        [src]="character.imageUrl"
+        [alt]="character.name" />
+    }
+
+    <ion-card-header>
+      <ion-card-title>{{ character.name }}</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <h3>Películas</h3>
+      <p>
+        {{ character.films?.length ? character.films.join(', ') : 'Sin películas registradas.' }}
+      </p>
+
+      <h3>Series</h3>
+      <p>
+        {{ character.tvShows?.length ? character.tvShows.join(', ') : 'Sin series registradas.' }}
+      </p>
+
+      <h3>Videojuegos</h3>
+      <p>
+        {{ character.videoGames?.length ? character.videoGames.join(', ') : 'Sin videojuegos registrados.' }}
+      </p>
+
+      <ion-button expand="block" (click)="toggleFavorite()">
+        <ion-icon
+          slot="start"
+          [name]="isFavorite ? 'heart' : 'heart-outline'">
+        </ion-icon>
+
+        {{ isFavorite ? 'Quitar de favoritos' : 'Agregar a favoritos' }}
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+}

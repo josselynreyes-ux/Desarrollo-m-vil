@@ -1,0 +1,45 @@
+// Mantiene el mismo fondo que la página principal.
+ion-content {
+  --background: #f5f3fa;
+}
+
+// Limita el ancho de la tarjeta y conserva sus bordes.
+ion-card {
+  margin: 16px;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+// Muestra la imagen completa sin deformarla.
+.detail-image {
+  display: block;
+  width: 100%;
+  height: 300px;
+  object-fit: contain;
+  background: #efedf5;
+}
+
+// Resalta el nombre del personaje.
+ion-card-title {
+  color: #5b3b8c;
+  font-size: 24px;
+}
+
+// Da formato a los títulos de las secciones.
+ion-card-content h3 {
+  color: #5b3b8c;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+// Mejora la lectura de las descripciones.
+ion-card-content p {
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+// Centra los mensajes de carga y error.
+.estado {
+  padding: 24px;
+  text-align: center;
+}

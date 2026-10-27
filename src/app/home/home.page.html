@@ -1,20 +1,170 @@
-<ion-header [translucent]="true">
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Disney Explorer</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button
+        routerLink="/favorites"
+        aria-label="Ver favoritos">
+        <ion-icon name="heart"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
   <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
+    <ion-searchbar
+      placeholder="Buscar personaje..."
+      [value]="searchInput"
+      [debounce]="0"
+      (ionInput)="onSearchInput($event)"
+      (keyup.enter)="searchCharacters()"
+      show-clear-button="focus">
+    </ion-searchbar>
+
+    <ion-button
+      slot="end"
+      (click)="searchCharacters()">
+      Buscar
+    </ion-button>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+  @if (loading && characters.length === 0) {
+    <div class="estado">
+      <p>Cargando personajes...</p>
+    </div>
+  }
+
+  @if (errorMessage) {
+    <div class="estado">
+      <ion-text color="danger">
+        <p>{{ errorMessage }}</p>
+      </ion-text>
+
+      <ion-button
+        (click)="retry()"
+        [disabled]="loading">
+        Reintentar
+      </ion-button>
+    </div>
+  }
+
+  @if (!loading && !errorMessage && characters.length === 0) {
+    <div class="estado">
+      <h2>No se encontraron personajes</h2>
+      <p>Prueba con otro nombre.</p>
+    </div>
+  }
+
+  <div class="character-grid">
+    @for (char of characters; track char._id) {
+      <ion-card>
+
+        <div class="image-container">
+          @if (char.imageUrl && !imageErrorIds.has(char._id)) {
+            <img
+              class="character-image"
+              [src]="char.imageUrl"
+              [alt]="char.name"
+              loading="lazy"
+              (error)="onImageError(char)" />
+          } @else {
+            <div class="image-placeholder">
+              Imagen no disponible
+            </div>
+          }
+        </div>
+
+        <ion-card-header>
+          <ion-card-title
+            class="clickable-title"
+            (click)="openDetails(char)">
+            {{ char.name }}
+          </ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content>
+          <p><strong>Películas:</strong></p>
+
+          <p class="description">
+            {{
+              char.films?.length
+                ? char.films.join(', ')
+                : 'Sin películas registradas.'
+            }}
+          </p>
+
+          @if (char.tvShows?.length) {
+            <p class="description">
+              <strong>Series:</strong>
+              {{ char.tvShows.join(', ') }}
+            </p>
+          }
+
+          <ion-button
+            expand="block"
+            fill="outline"
+            (click)="openDetails(char)">
+            Ver detalle
+          </ion-button>
+
+          <ion-button
+            expand="block"
+            fill="clear"
+            (click)="toggleFavorite(char)">
+
+            <ion-icon
+              slot="start"
+              [name]="favoriteIds.has(char._id) ? 'heart' : 'heart-outline'">
+            </ion-icon>
+
+            {{
+              favoriteIds.has(char._id)
+                ? 'Quitar favorito'
+                : 'Agregar favorito'
+            }}
+          </ion-button>
+        </ion-card-content>
+      </ion-card>
+    }
   </div>
+
+  @if (loading && characters.length > 0) {
+    <div class="estado">
+      <p>Cargando más personajes...</p>
+    </div>
+  }
+
+  @if (infiniteError) {
+    <div class="estado">
+      <ion-text color="danger">
+        <p>No se pudieron cargar más personajes.</p>
+      </ion-text>
+
+      <ion-button (click)="retryInfinite()">
+        Reintentar carga
+      </ion-button>
+    </div>
+  }
+
+  <ion-infinite-scroll
+    threshold="150px"
+    [disabled]="!hasMore || !!errorMessage || infiniteError"
+    (ionInfinite)="loadCharacters($event)">
+
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Cargando más personajes...">
+    </ion-infinite-scroll-content>
+
+  </ion-infinite-scroll>
+
+  @if (!hasMore && characters.length > 0) {
+    <div class="estado">
+      <p>Has llegado al final de los resultados.</p>
+    </div>
+  }
+
 </ion-content>

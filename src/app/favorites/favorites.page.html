@@ -1,0 +1,83 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <!-- Permite regresar a la página anterior. -->
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+
+    <ion-title>Mis favoritos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <!-- Informa que se están recuperando los favoritos. -->
+  @if (loading) {
+    <div class="estado">
+      <p>Cargando favoritos...</p>
+    </div>
+  }
+
+  <!-- Muestra los errores al recuperar la lista. -->
+  @if (!loading && errorMessage) {
+    <div class="estado">
+      <ion-text color="danger">
+        <p>{{ errorMessage }}</p>
+      </ion-text>
+
+      <ion-button (click)="loadFavorites()">
+        Reintentar
+      </ion-button>
+    </div>
+  }
+
+  <!-- Informa cuando todavía no hay favoritos guardados. -->
+  @if (!loading && !errorMessage && characters.length === 0) {
+    <div class="estado">
+      <h2>No tienes favoritos</h2>
+      <p>Agrega personajes desde Disney Explorer.</p>
+    </div>
+  }
+
+  <!-- Organiza los personajes favoritos en tarjetas. -->
+  <div class="character-grid">
+
+    @for (char of characters; track char._id) {
+      <ion-card>
+
+        <!-- Muestra la imagen del personaje. -->
+        @if (char.imageUrl) {
+          <img
+            class="favorite-image"
+            [src]="char.imageUrl"
+            [alt]="char.name"
+            loading="lazy" />
+        }
+
+        <ion-card-header>
+          <ion-card-title>{{ char.name }}</ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content>
+
+          <!-- Abre la información completa del personaje. -->
+          <ion-button expand="block" (click)="openDetails(char)">
+            Ver detalle
+          </ion-button>
+
+          <!-- Elimina el personaje de la lista persistente. -->
+          <ion-button
+            expand="block"
+            fill="outline"
+            color="danger"
+            (click)="removeFavorite(char)">
+            Quitar favorito
+          </ion-button>
+
+        </ion-card-content>
+      </ion-card>
+    }
+
+  </div>
+
+</ion-content>
