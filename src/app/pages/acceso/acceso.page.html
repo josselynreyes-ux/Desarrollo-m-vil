@@ -1,0 +1,131 @@
+<ion-content class="fondo-acceso">
+
+  <div class="contenedor-acceso">
+
+    <div class="encabezado-acceso">
+
+      <div class="icono-marca">
+        <span>U</span>
+      </div>
+
+      <h1>
+        <span class="marca">Urban</span>Inspect
+      </h1>
+
+      <p>
+        Gestión y seguimiento de incidencias urbanas.
+      </p>
+
+    </div>
+
+    <ion-card class="tarjeta-acceso">
+
+      <ion-card-content>
+
+        <div class="titulo-formulario">
+
+          <span class="etiqueta">PLATAFORMA URBANA</span>
+
+          <h2>
+            {{ modoRegistro
+              ? 'Crear una cuenta'
+              : 'Bienvenido nuevamente' }}
+          </h2>
+
+          <p>
+            {{ modoRegistro
+              ? 'Regístrate para comenzar a utilizar UrbanInspect.'
+              : 'Ingresa tus credenciales para continuar.' }}
+          </p>
+
+        </div>
+
+        <div class="formulario">
+
+          <ion-item class="campo">
+            <ion-input
+              label="Correo electrónico"
+              labelPlacement="stacked"
+              type="email"
+              placeholder="ejemplo@correo.com"
+              [(ngModel)]="email">
+            </ion-input>
+          </ion-item>
+
+          <ion-item class="campo">
+            <ion-input
+              label="Contraseña"
+              labelPlacement="stacked"
+              type="password"
+              placeholder="Ingresa tu contraseña"
+              [(ngModel)]="password">
+            </ion-input>
+          </ion-item>
+
+          <ion-text color="danger" *ngIf="error">
+            <p class="mensaje-error">
+              {{ error }}
+            </p>
+          </ion-text>
+
+          <ion-text color="success" *ngIf="mensaje">
+            <p>{{ mensaje }}</p>
+          </ion-text>
+
+          <ion-button
+            expand="block"
+            class="boton-principal"
+            [disabled]="loading || !email.trim() || !password"
+            (click)="acceder()">
+
+            <ion-spinner
+              *ngIf="loading"
+              name="crescent">
+            </ion-spinner>
+
+            <span *ngIf="!loading">
+              {{ modoRegistro
+                ? 'Crear cuenta'
+                : 'Iniciar sesión' }}
+            </span>
+
+          </ion-button>
+
+        </div>
+
+        <div class="separador"></div>
+
+        <div class="alternativa">
+
+          <p>
+            {{ modoRegistro
+              ? '¿Ya tienes una cuenta?'
+              : '¿Todavía no tienes una cuenta?' }}
+          </p>
+
+          <ion-button
+            expand="block"
+            fill="clear"
+            class="boton-alternativo"
+            [disabled]="loading"
+            (click)="cambiarModo()">
+
+            {{ modoRegistro
+              ? 'Iniciar sesión'
+              : 'Registrarse' }}
+
+          </ion-button>
+
+        </div>
+
+      </ion-card-content>
+
+    </ion-card>
+
+    <p class="pie-acceso">
+      UrbanInspect · Gestión inteligente de incidencias
+    </p>
+
+  </div>
+
+</ion-content>
