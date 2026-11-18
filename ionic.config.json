@@ -1,0 +1,7 @@
+{
+  "name": "smart-campus",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
