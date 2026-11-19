@@ -1,15 +1,95 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title> Tab 3 </ion-title>
+  <ion-toolbar color="primary">
+    <ion-title>Directorio de Usuarios</ion-title>
+  </ion-toolbar>
+  <ion-toolbar color="primary">
+    <ion-searchbar
+      placeholder="Buscar usuario por nombre..."
+      [debounce]="250"
+      (ionInput)="buscarUsuario($event)">
+    </ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 3</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content [fullscreen]="true" class="ion-padding">
+  <!-- Estado de carga inicial -->
+  @if (cargando) {
+    <div class="ion-text-center ion-padding" style="margin-top: 40px;">
+      <ion-spinner name="crescent" color="primary"></ion-spinner>
+      <p>Consultando usuarios...</p>
+    </div>
+  }
 
-  <app-explore-container name="Tab 3 page"></app-explore-container>
+  <!-- Mensaje amigable si falla la consulta -->
+  @if (!cargando && errorCarga) {
+    <ion-card color="light">
+      <ion-card-content class="ion-text-center ion-padding">
+        <ion-icon name="alert-circle-outline" color="danger" style="font-size: 48px;"></ion-icon>
+        <h3>No se pudieron cargar los usuarios</h3>
+        <p>Verifica tu conexión a internet e inténtalo nuevamente.</p>
+        <ion-button class="ion-margin-top" (click)="cargarUsuarios()">
+          <ion-icon name="refresh-outline" slot="start"></ion-icon>
+          Reintentar
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+  }
+
+  <!-- Contenido principal cuando la API responde -->
+  @if (!cargando && !errorCarga) {
+    <div class="ion-padding-horizontal" style="display: flex; justify-content: space-between; align-items: center;">
+      <ion-text color="medium" style="font-size: 0.9rem;">
+        Mostrando <strong>{{ usuariosMostrados.length }}</strong> de <strong>{{ usuariosFiltrados.length }}</strong> usuarios
+      </ion-text>
+    </div>
+
+    <!-- Mensaje si la búsqueda no tiene coincidencias -->
+    @if (usuariosFiltrados.length === 0) {
+      <ion-card>
+        <ion-card-content class="ion-text-center">
+          No se encontraron usuarios que coincidan con "{{ terminoBusqueda }}".
+        </ion-card-content>
+      </ion-card>
+    }
+
+    <!-- Tarjetas de usuarios -->
+    @for (user of usuariosMostrados; track user.id) {
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title style="font-size: 1.15rem; display: flex; align-items: center; gap: 8px;">
+            <ion-icon name="person-circle-outline" color="primary" style="font-size: 28px;"></ion-icon>
+            {{ user.name }}
+          </ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content>
+          <p style="margin: 4px 0; display: flex; align-items: center; gap: 8px;">
+            <ion-icon name="mail-outline" color="medium"></ion-icon>
+            <span>{{ user.email }}</span>
+          </p>
+          <p style="margin: 4px 0; display: flex; align-items: center; gap: 8px;">
+            <ion-icon name="call-outline" color="medium"></ion-icon>
+            <span>{{ user.phone }}</span>
+          </p>
+        </ion-card-content>
+      </ion-card>
+    }
+
+    <!-- Aviso cuando ya se mostraron todos los registros -->
+    @if (scrollDeshabilitado && usuariosFiltrados.length > 0) {
+      <p class="ion-text-center" style="color: var(--ion-color-medium); font-size: 0.85rem; padding: 16px 0;">
+        Has llegado al final de la lista.
+      </p>
+    }
+
+    <!-- Infinite Scroll -->
+    <ion-infinite-scroll
+      [disabled]="scrollDeshabilitado"
+      (ionInfinite)="cargarMas($event)">
+      <ion-infinite-scroll-content
+        loadingSpinner="bubbles"
+        loadingText="Cargando más usuarios...">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  }
 </ion-content>

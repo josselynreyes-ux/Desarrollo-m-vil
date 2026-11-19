@@ -1,15 +1,174 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title> Tab 2 </ion-title>
+  <ion-toolbar color="primary">
+    <ion-title>Actividades Académicas</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 2</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content [fullscreen]="true" class="ion-padding">
+  <!-- FORMULARIO DE REGISTRO -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Nueva Actividad</ion-card-title>
+    </ion-card-header>
 
-  <app-explore-container name="Tab 2 page"></app-explore-container>
+    <ion-card-content>
+      <form [formGroup]="actividadForm" (ngSubmit)="guardarActividad()">
+        
+        <!-- 1. Título -->
+        <ion-item>
+          <ion-input
+            label="Título *"
+            labelPlacement="floating"
+            placeholder="Ej. Proyecto Ionic"
+            formControlName="titulo">
+          </ion-input>
+        </ion-item>
+        @if (actividadForm.get('titulo')?.touched && actividadForm.get('titulo')?.invalid) {
+          <ion-text color="danger" class="ion-padding-start" style="font-size: 0.8rem;">
+            El título es obligatorio.
+          </ion-text>
+        }
+
+        <!-- 2. Descripción (Mínimo 10 caracteres) -->
+        <ion-item>
+          <ion-textarea
+            label="Descripción (mín. 10 caracteres) *"
+            labelPlacement="floating"
+            rows="3"
+            placeholder="Describe los detalles de la actividad..."
+            formControlName="descripcion">
+          </ion-textarea>
+        </ion-item>
+        @if (actividadForm.get('descripcion')?.touched && actividadForm.get('descripcion')?.invalid) {
+          <ion-text color="danger" class="ion-padding-start" style="font-size: 0.8rem;">
+            La descripción es obligatoria y debe tener al menos 10 caracteres.
+          </ion-text>
+        }
+
+        <!-- 3. Tipo -->
+        <ion-item>
+          <ion-select label="Tipo de actividad *" labelPlacement="floating" formControlName="tipo">
+            @for (tipo of tiposActividad; track tipo) {
+              <ion-select-option [value]="tipo">{{ tipo }}</ion-select-option>
+            }
+          </ion-select>
+        </ion-item>
+        @if (actividadForm.get('tipo')?.touched && actividadForm.get('tipo')?.invalid) {
+          <ion-text color="danger" class="ion-padding-start" style="font-size: 0.8rem;">
+            Selecciona un tipo de actividad.
+          </ion-text>
+        }
+
+        <!-- 4. Fecha de entrega -->
+        <ion-item>
+          <ion-label>Fecha de entrega *</ion-label>
+          <ion-datetime-button datetime="fechaEntregaPicker"></ion-datetime-button>
+          <ion-modal [keepContentsMounted]="true">
+            <ng-template>
+              <ion-datetime
+                id="fechaEntregaPicker"
+                presentation="date"
+                formControlName="fechaEntrega">
+              </ion-datetime>
+            </ng-template>
+          </ion-modal>
+        </ion-item>
+
+        <!-- 5. Prioridad -->
+        <div class="ion-padding-top ion-padding-start">
+          <ion-label style="font-weight: 500; font-size: 0.9rem;">Prioridad *</ion-label>
+          <ion-radio-group formControlName="prioridad" style="display: flex; gap: 16px; margin-top: 8px;">
+            @for (prio of prioridades; track prio) {
+              <ion-item lines="none" class="ion-no-padding">
+                <ion-radio [value]="prio" labelPlacement="end">{{ prio }}</ion-radio>
+              </ion-item>
+            }
+          </ion-radio-group>
+          @if (actividadForm.get('prioridad')?.touched && actividadForm.get('prioridad')?.invalid) {
+            <ion-text color="danger" style="font-size: 0.8rem;">
+              Debes seleccionar una prioridad.
+            </ion-text>
+          }
+        </div>
+
+        <!-- 6. Completada -->
+        <ion-item lines="none" class="ion-margin-top">
+          <ion-checkbox formControlName="completada" labelPlacement="end">
+            Marcar como completada inicialmente
+          </ion-checkbox>
+        </ion-item>
+
+        <!-- Botón Guardar -->
+        <ion-button
+          expand="block"
+          type="submit"
+          class="ion-margin-top"
+          [disabled]="actividadForm.invalid">
+          <ion-icon name="add-circle-outline" slot="start"></ion-icon>
+          Guardar Actividad
+        </ion-button>
+      </form>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- LISTADO DE ACTIVIDADES DESDE FIRESTORE -->
+  <h3 class="ion-padding-start" style="font-size: 1.1rem; font-weight: 600;">
+    Actividades Registradas ({{ actividades.length }})
+  </h3>
+
+  @if (actividades.length === 0) {
+    <ion-card>
+      <ion-card-content class="ion-text-center">
+        No hay actividades registradas aún. Crea la primera arriba.
+      </ion-card-content>
+    </ion-card>
+  }
+
+  <ion-list style="background: transparent;">
+    @for (act of actividades; track act.id) {
+      <ion-card [style.opacity]="act.completada ? '0.75' : '1'">
+        <ion-card-header>
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <ion-card-title
+              style="font-size: 1.15rem;"
+              [style.text-decoration]="act.completada ? 'line-through' : 'none'">
+              {{ act.titulo }}
+            </ion-card-title>
+            <ion-badge [color]="obtenerColorPrioridad(act.prioridad)">
+              {{ act.prioridad }}
+            </ion-badge>
+          </div>
+          <ion-text color="medium" style="font-size: 0.85rem;">
+            {{ act.tipo }} · Entrega: <strong>{{ act.fechaEntrega }}</strong>
+          </ion-text>
+        </ion-card-header>
+
+        <ion-card-content>
+          <p style="margin-bottom: 12px;">{{ act.descripcion }}</p>
+
+          <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #eee; padding-top: 8px;">
+            <ion-button
+              size="small"
+              fill="outline"
+              [color]="act.completada ? 'medium' : 'success'"
+              (click)="cambiarEstado(act)">
+              <ion-icon
+                [name]="act.completada ? 'checkmark-circle-outline' : 'ellipse-outline'"
+                slot="start">
+              </ion-icon>
+              {{ act.completada ? 'Completada' : 'Marcar completada' }}
+            </ion-button>
+
+            <ion-button
+              size="small"
+              fill="clear"
+              color="danger"
+              (click)="confirmarEliminacion(act)">
+              <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
+            </ion-button>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    }
+  </ion-list>
 </ion-content>

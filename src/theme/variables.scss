@@ -1,2 +1,44 @@
-// For information on how to create your own theme, please refer to:
-// https://ionicframework.com/docs/theming/
+:root {
+  color-scheme: light;
+
+  /* Morado Principal */
+  --ion-color-primary: #6d28d9;
+  --ion-color-primary-rgb: 109, 40, 217;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #6023bf;
+  --ion-color-primary-tint: #7c3edd;
+
+  /* Verde Esmeralda Secundario */
+  --ion-color-secondary: #10b981;
+  --ion-color-secondary-rgb: 16, 185, 129;
+  --ion-color-secondary-contrast: #ffffff;
+  --ion-color-secondary-contrast-rgb: 255, 255, 255;
+  --ion-color-secondary-shade: #0ea372;
+  --ion-color-secondary-tint: #28c08e;
+
+  /* Morado Suave */
+  --ion-color-tertiary: #7c3aed;
+  --ion-color-tertiary-rgb: 124, 58, 237;
+  --ion-color-tertiary-contrast: #ffffff;
+  --ion-color-tertiary-contrast-rgb: 255, 255, 255;
+  --ion-color-tertiary-shade: #6d33d1;
+  --ion-color-tertiary-tint: #894eef;
+
+  /* Verde Éxito */
+  --ion-color-success: #059669;
+  --ion-color-success-rgb: 5, 150, 105;
+  --ion-color-success-contrast: #ffffff;
+  --ion-color-success-contrast-rgb: 255, 255, 255;
+  --ion-color-success-shade: #04845c;
+  --ion-color-success-tint: #1ea178;
+
+  /* Superficies y textos siempre nítidos (evita conflictos con modo oscuro) */
+  --ion-background-color: #f4f2fa;
+  --ion-background-color-rgb: 244, 242, 250;
+  --ion-text-color: #1e1b2e;
+  --ion-text-color-rgb: 30, 27, 46;
+  --ion-card-background: #ffffff;
+  --ion-item-background: #ffffff;
+  --ion-border-color: #e5e0f5;
+}

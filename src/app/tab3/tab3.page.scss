@@ -1,0 +1,26 @@
+ion-searchbar {
+  --background: rgba(255, 255, 255, 0.95);
+  --color: #1f1b2e;
+  --placeholder-color: #6b7280;
+  --icon-color: #6d28d9;
+  --clear-button-color: #059669;
+  --border-radius: 12px;
+  padding-top: 4px;
+  padding-bottom: 10px;
+}
+
+ion-card {
+  border-left: 4px solid #10b981;
+
+  ion-card-title {
+    color: #4c1d95;
+    font-weight: 700;
+  }
+
+  ion-card-content ion-icon {
+    color: #059669 !important;
+    background: rgba(16, 185, 129, 0.12);
+    padding: 5px;
+    border-radius: 8px;
+  }
+}

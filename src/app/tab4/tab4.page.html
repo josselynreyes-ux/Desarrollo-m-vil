@@ -1,0 +1,102 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>Dispositivo y Sensores</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <!-- SECCIÓN A: ACELERÓMETRO -->
+  <ion-card>
+    <ion-card-header>
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <ion-card-title style="display: flex; align-items: center; gap: 8px;">
+          <ion-icon name="speedometer-outline" color="primary"></ion-icon>
+          Acelerómetro
+        </ion-card-title>
+        <ion-badge [color]="sensorActivo ? 'success' : 'medium'">
+          {{ sensorActivo ? 'Activo' : 'Detenido' }}
+        </ion-badge>
+      </div>
+      <ion-card-subtitle>Lectura de ejes físicos en tiempo real (m/s²)</ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+      <!-- Visualización de ejes X, Y, Z -->
+      <div style="background: var(--ion-color-light); border-radius: 10px; padding: 16px; margin-bottom: 16px; font-family: monospace; font-size: 1.15rem;">
+        <div><strong>X:</strong> {{ ejes.x | number:'1.2-2' }}</div>
+        <div style="margin: 6px 0;"><strong>Y:</strong> {{ ejes.y | number:'1.2-2' }}</div>
+        <div><strong>Z:</strong> {{ ejes.z | number:'1.2-2' }}</div>
+      </div>
+
+      <!-- Mensaje informativo si el sensor no está disponible -->
+      @if (mensajeSensor) {
+        <div style="display: flex; align-items: flex-start; gap: 8px; background: rgba(var(--ion-color-warning-rgb), 0.15); padding: 10px; border-radius: 8px; margin-bottom: 14px;">
+          <ion-icon name="warning-outline" color="warning" style="font-size: 22px; flex-shrink: 0; margin-top: 2px;"></ion-icon>
+          <ion-text style="font-size: 0.85rem;">{{ mensajeSensor }}</ion-text>
+        </div>
+      }
+
+      <!-- Botones Iniciar / Detener -->
+      <div style="display: flex; gap: 10px;">
+        <ion-button
+          expand="block"
+          color="success"
+          style="flex: 1;"
+          [disabled]="sensorActivo"
+          (click)="iniciarLectura()">
+          <ion-icon name="play-outline" slot="start"></ion-icon>
+          Iniciar lectura
+        </ion-button>
+
+        <ion-button
+          expand="block"
+          color="danger"
+          style="flex: 1;"
+          [disabled]="!sensorActivo"
+          (click)="detenerLectura()">
+          <ion-icon name="stop-outline" slot="start"></ion-icon>
+          Detener lectura
+        </ion-button>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- SECCIÓN B: ALMACENAMIENTO LOCAL -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title style="display: flex; align-items: center; gap: 8px;">
+        <ion-icon name="person-outline" color="tertiary"></ion-icon>
+        Almacenamiento Local
+      </ion-card-title>
+      <ion-card-subtitle>Persistencia mediante Capacitor Preferences</ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-item>
+        <ion-input
+          label="Nombre del estudiante"
+          labelPlacement="floating"
+          placeholder="Ingresa tu nombre completo"
+          [(ngModel)]="nombreEstudiante">
+        </ion-input>
+      </ion-item>
+
+      <ion-button
+        expand="block"
+        color="tertiary"
+        class="ion-margin-top"
+        (click)="guardarNombre()">
+        <ion-icon name="save-outline" slot="start"></ion-icon>
+        Guardar nombre
+      </ion-button>
+
+      @if (nombreGuardado) {
+        <div class="ion-margin-top ion-text-center">
+          <ion-text color="medium" style="font-size: 0.9rem;">
+            Estudiante almacenado: <strong>{{ nombreGuardado }}</strong>
+          </ion-text>
+        </div>
+      }
+    </ion-card-content>
+  </ion-card>
+</ion-content>

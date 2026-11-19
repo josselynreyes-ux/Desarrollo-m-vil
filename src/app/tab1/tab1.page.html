@@ -1,15 +1,97 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title> Tab 1 </ion-title>
+  <ion-toolbar color="primary">
+    <ion-title>SmartCampus</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 1</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content [fullscreen]="true" class="ion-padding">
+  <!-- Tarjeta Principal de Bienvenida -->
+  <ion-card>
+    <ion-card-header class="ion-text-center">
+      <ion-icon name="school-outline" color="primary" style="font-size: 56px; margin: 0 auto;"></ion-icon>
+      <ion-card-title style="font-size: 1.5rem; margin-top: 8px;">SmartCampus</ion-card-title>
+      <ion-card-subtitle>
+        <ion-icon name="calendar-outline" style="vertical-align: middle;"></ion-icon>
+        {{ fechaActual | date:'fullDate' }}
+      </ion-card-subtitle>
+    </ion-card-header>
 
-  <app-explore-container name="Tab 1 page"></app-explore-container>
+    <ion-card-content>
+      <p style="margin-bottom: 12px; line-height: 1.5;">
+        Aplicación móvil institucional diseñada para registrar y gestionar actividades académicas en la nube, consultar información de usuarios mediante servicios REST y aprovechar las capacidades nativas del dispositivo móvil.
+      </p>
+
+      <strong>Integrantes del equipo:</strong>
+      <div style="margin-top: 6px;">
+        @for (persona of integrantes; track persona) {
+          <ion-chip color="primary" outline="true">
+            <ion-label>{{ persona }}</ion-label>
+          </ion-chip>
+        }
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Cuatro tarjetas de resumen de funcionalidades (clicables para navegar) -->
+  <h3 class="ion-padding-start" style="font-size: 1.1rem; font-weight: 600;">Módulos del Sistema</h3>
+
+  <ion-grid class="ion-no-padding">
+    <ion-row>
+      <ion-col size="12" size-md="6">
+        <ion-card button routerLink="/tabs/tab1">
+          <ion-card-header>
+            <ion-card-title style="font-size: 1.1rem;">
+              <ion-icon name="home-outline" color="primary" style="vertical-align: middle; margin-right: 6px;"></ion-icon>
+              1. Inicio
+            </ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            Bienvenida institucional, presentación del equipo y resumen general de los módulos.
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+
+      <ion-col size="12" size-md="6">
+        <ion-card button routerLink="/tabs/tab2">
+          <ion-card-header>
+            <ion-card-title style="font-size: 1.1rem;">
+              <ion-icon name="checkmark-done-circle-outline" color="success" style="vertical-align: middle; margin-right: 6px;"></ion-icon>
+              2. Actividades
+            </ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            Gestión CRUD completa de tareas, proyectos y exámenes sincronizada en Cloud Firestore.
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+
+      <ion-col size="12" size-md="6">
+        <ion-card button routerLink="/tabs/tab3">
+          <ion-card-header>
+            <ion-card-title style="font-size: 1.1rem;">
+              <ion-icon name="people-circle-outline" color="tertiary" style="vertical-align: middle; margin-right: 6px;"></ion-icon>
+              3. Usuarios
+            </ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            Directorio consultado desde API REST con buscador en tiempo real e Infinite Scroll progresivo.
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+
+      <ion-col size="12" size-md="6">
+        <ion-card button routerLink="/tabs/tab4">
+          <ion-card-header>
+            <ion-card-title style="font-size: 1.1rem;">
+              <ion-icon name="phone-portrait-outline" color="warning" style="vertical-align: middle; margin-right: 6px;"></ion-icon>
+              4. Dispositivo
+            </ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            Lectura en vivo de los ejes X, Y, Z del acelerómetro y almacenamiento local persistente.
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

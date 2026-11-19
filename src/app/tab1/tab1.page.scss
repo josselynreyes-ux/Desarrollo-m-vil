@@ -1,0 +1,50 @@
+ion-card:first-of-type {
+  border-top: 5px solid #6d28d9;
+  background: linear-gradient(180deg, #ffffff 0%, #faf8ff 100%);
+
+  ion-icon[name="school-outline"] {
+    background: linear-gradient(135deg, rgba(109, 40, 217, 0.12), rgba(16, 185, 129, 0.16));
+    padding: 16px;
+    border-radius: 50%;
+    color: #6d28d9 !important;
+  }
+
+  ion-card-title {
+    color: #4c1d95;
+    font-weight: 700;
+  }
+
+  ion-card-subtitle {
+    color: #059669;
+    font-weight: 600;
+    margin-top: 4px;
+  }
+}
+
+h3 {
+  color: #4c1d95;
+  margin-top: 18px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  &::before {
+    content: '';
+    display: inline-block;
+    width: 5px;
+    height: 18px;
+    border-radius: 4px;
+    background: linear-gradient(180deg, #6d28d9, #10b981);
+  }
+}
+
+ion-grid ion-card {
+  border-left: 4px solid #10b981;
+  height: calc(100% - 16px);
+
+  ion-card-title {
+    color: #3b0764;
+    font-weight: 600;
+  }
+}
