@@ -1,0 +1,20 @@
+
+<ion-app>
+
+  <!-- Pantalla de bienvenida -->
+  <div class="splash-container" *ngIf="showSplash">
+
+    <img
+      src="assets/splash.jpg"
+      alt="J2Dex"
+      class="splash-image"
+    />
+
+  </div>
+
+  <!-- Contenido de la aplicación -->
+  <ion-router-outlet
+    [style.display]="showSplash ? 'none' : 'block'"
+  ></ion-router-outlet>
+
+</ion-app>
