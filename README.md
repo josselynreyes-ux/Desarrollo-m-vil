@@ -61,4 +61,7 @@ Evidencia en el dispositivo móvil
 
 <img width="369" height="746" alt="image" src="https://github.com/user-attachments/assets/a86708f7-58a7-434c-8edf-edefdad1bff5" />
 
-APK:[Nivel3_Pokedex.zip](https://github.com/user-attachments/files/33790767/Nivel3_Pokedex.zip)
+APK FIRMADO: [app-release.zip](https://github.com/user-attachments/files/35222388/app-release.zip)
+
+
+
